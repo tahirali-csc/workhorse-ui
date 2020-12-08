@@ -1,5 +1,6 @@
 import React from 'react'
 import EmpList from '../services/list'
+import Button from '@material-ui/core/Button';
 
 // const Hello = () => (
 //   <div>
@@ -21,14 +22,18 @@ export default class Hello extends React.Component {
     try {
       let res = await e.GetData()
       this.setState({
-        message : res
+        message: res
       })
     } catch (e) {
       console.log(e)
     }
-  }  
-
-  render()  { 
-    return <h1>{this.state.message}</h1>
   }
+  render() {
+    return (<div>
+      {this.state.message} <br/>
+      <Button variant="contained" color="primary">
+        Hello World
+    </Button>
+    </div>)
+  } 
 }
