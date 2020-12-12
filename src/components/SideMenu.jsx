@@ -22,6 +22,7 @@ import {
     useHistory
 } from "react-router-dom";
 import Builds from './Builds/Builds';
+import LogView from './LogViewer/LogView';
 
 const drawerWidth = 240;
 
@@ -157,11 +158,11 @@ const SideMenu = () => {
                 <Divider />
                 <Router>
                     <List>
-                        <ListItem button key="Build">
-                            <ListItemText primary="Build" onClick={showBuilds} />
+                        <ListItem button key="Build" onClick={showBuilds}>
+                            <ListItemText primary="Build"  />
                         </ListItem>
-                        <ListItem button key="Repo">
-                            <ListItemText primary="Repo" onClick={showAddRepo} />
+                        <ListItem button key="Repo" onClick={showAddRepo}>
+                            <ListItemText primary="Repo"  />
                         </ListItem>
                     </List>
                 </Router>
@@ -169,11 +170,17 @@ const SideMenu = () => {
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
-                    <Route exact path="/builds">
+                    {/* <Route exact path="/builds">
                         <Builds />
-                    </Route>
+                    </Route> */}
                     <Route path="/addRepo">
                         <AddRepo />
+                    </Route>
+                    <Route path="/buildLogs/:buildId">
+                        <LogView />
+                    </Route>
+                    <Route path="/builds">
+                        <Builds />
                     </Route>
                 </Switch>
             </main>
