@@ -60,7 +60,7 @@ const Builds = () => {
                 <TableBody>
                     {data.map((row) => (
                         <TableRow key={row.Id}>
-                            <TableCell>1</TableCell>
+                            <TableCell>{row.Id}</TableCell>
                             <TableCell>tahir</TableCell>
                             <TableCell>{row.StartTs}</TableCell>
                             <TableCell>{row.EndTs}</TableCell>

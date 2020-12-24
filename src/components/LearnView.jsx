@@ -1,20 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import TerminalView from '../TerminalView/TerminalView';
+import React, { useEffect, useState } from 'react'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
 import { Button } from '@material-ui/core'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useParams
-} from "react-router-dom"
+import TerminalView from './TerminalView/TerminalView';
 
-const LogsView = () => {
+const LearnView = () => {
+
     const [stepsMap, setStepsMap] = useState(() => new Map())
     const [currentStepId, setCurrentStepId] = useState(-1)
     const [currentMsg, setCurrentMsg] = useState("")
-    const {buildId} = useParams()
 
     useEffect(() => {
         console.log("Triggered", currentStepId)
@@ -32,18 +26,18 @@ const LogsView = () => {
 
         setStepsMap(prev => {
             let newMap = new Map(prev)
-            if (!newMap.has(row.StepId)) {
-                newMap.set(row.StepId, React.createRef())
+            if (!newMap.has(row.stepId)) {
+                newMap.set(row.stepId, React.createRef())
             }
-            setCurrentStepId(row.StepId)
-            setCurrentMsg(row.Message)
+            setCurrentStepId(row.stepId)
+            setCurrentMsg(row.data)
             return newMap
         })
         // console.log("State===", slog.get(row.stepId))
     }
 
     useEffect(() => {
-        const es = new EventSource("http://localhost:8080/api/logs?buildNumber=" + buildId)
+        const es = new EventSource("http://localhost:8083/api/events")
         es.onmessage = handleMessage
 
         const handleClose = (e) => {
@@ -58,8 +52,6 @@ const LogsView = () => {
             es.close()
         }
     }, [])
-
-    console.log("Current Build ID:::", buildId)
 
     return (
         <div>
@@ -77,4 +69,4 @@ const LogsView = () => {
     )
 }
 
-export default LogsView
+export default LearnView
