@@ -23,6 +23,7 @@ import {
 } from "react-router-dom";
 import Builds from './Builds/Builds';
 import LogView from './LogViewer/LogView';
+import FinishedLogs from './FinishedLogs/FinishedLogs';
 
 const drawerWidth = 240;
 
@@ -178,6 +179,9 @@ const SideMenu = () => {
                     </Route>
                     <Route path="/buildLogs/:buildId">
                         <LogView />
+                    </Route>
+                    <Route path="/finishedLogs/:buildId">
+                        <FinishedLogs />
                     </Route>
                     <Route path="/builds">
                         <Builds />

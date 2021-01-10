@@ -30,16 +30,33 @@ const LogsView = () => {
         // setList(l => ([...l, e.data]))
         const row = JSON.parse(e.data)
 
-        setStepsMap(prev => {
-            let newMap = new Map(prev)
-            if (!newMap.has(row.StepId)) {
-                newMap.set(row.StepId, React.createRef())
-            }
-            setCurrentStepId(row.StepId)
-            setCurrentMsg(row.Message)
-            return newMap
-        })
-        // console.log("State===", slog.get(row.stepId))
+        // setStepsMap(prev => {
+        //     // let newMap = new Map(prev)
+        //     // if (!newMap.has(row.StepId)) {
+        //     //     newMap.set(row.StepId, React.createRef())
+        //     // }
+        //     // setCurrentStepId(row.StepId)
+        //     // setCurrentMsg(row.Message)
+        //     return newMap
+        // })
+
+        setCurrentStepId(row.StepId)
+        setCurrentMsg(row.Message)
+    }
+
+    const handleNotify = (e) => {
+        const row = JSON.parse(e.data)
+        if (row.Status === "Started"){
+            console.log("Notify", row)
+
+            setStepsMap(prev => {
+                let newMap = new Map(prev)
+                if (!newMap.has(row.StepId)) {
+                    newMap.set(row.StepId, React.createRef())
+                }
+                return newMap
+            })
+        }
     }
 
     useEffect(() => {
@@ -52,9 +69,11 @@ const LogsView = () => {
             console.log(e)
         }
         es.addEventListener("close", handleClose)
+        es.addEventListener("notify", handleNotify)
 
         return () => {
             es.removeEventListener("close", handleClose)
+            es.removeEventListener("notify", handleNotify)
             es.close()
         }
     }, [])

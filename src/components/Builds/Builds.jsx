@@ -28,22 +28,19 @@ const Builds = () => {
     const [data, setData] = useState([])
 
     const getLink = (o) => {
+        if (o.Status.Name === "Finished") {
+            return "/finishedLogs/" + o.Id
+        }
         return "/buildLogs/" + o.Id
     }
 
     useEffect(async () => {
-        // console.log("Gottt")
         const res = await GetBuilds()
         setData(res)
-        console.log(data)
+        // console.log(data)
     }, [])
 
     return (
-        // <ul>
-        //     {data.map((row) => (
-        //         <li key={row.Id}>{row.Id}</li>
-        //     ))}
-        // </ul>
         <TableContainer component={Paper}>
             <Table size="medium" aria-label="a dense table">
                 <TableHead>
@@ -65,7 +62,7 @@ const Builds = () => {
                             <TableCell>{row.StartTs}</TableCell>
                             <TableCell>{row.EndTs}</TableCell>
                             <TableCell>5min</TableCell>
-                            <TableCell>1</TableCell>
+                            <TableCell>{row.Status.Name}</TableCell>
                             <TableCell>
                                 <Link to={getLink(row)}>Log</Link>
                             </TableCell>
